@@ -11,31 +11,20 @@ import (
 	"github.com/Ridwan414/goexpress"
 )
 
-// This file demonstrates how to use the GoExpress framework
-// Run with: go run goexpress.go config.go example_usage.go
-
-func exampleBasicUsage() {
-	// Create a new engine with default settings
+func exampleDefaultEngine() {
 	app := goexpress.New()
-
-	// Run the server (this blocks until server stops)
 	if err := app.Run(); err != nil {
 		log.Fatal(err)
 	}
 }
 
 func exampleCustomConfig() {
-	// Create custom configuration
 	config := &goexpress.Config{
-		Port:         ":3000",          // Use port 3000 instead of 8080
-		ReadTimeout:  15 * time.Second, // Wait up to 15 seconds for requests
-		WriteTimeout: 15 * time.Second, // Wait up to 15 seconds to send response
+		Port:         ":3001",
+		ReadTimeout:  12 * time.Second,
+		WriteTimeout: 12 * time.Second,
 	}
-
-	// Create engine with custom config
 	app := goexpress.NewWithConfig(config)
-
-	// Run the server
 	if err := app.Run(); err != nil {
 		log.Fatal(err)
 	}
@@ -76,11 +65,9 @@ func exampleGracefulShutdown() {
 	log.Println("Server exited gracefully")
 }
 
-// Uncomment the function you want to run and execute:
-// go run main.go
-
 func main() {
-	// exampleBasicUsage()
+	// Uncomment the desired example to run:
+	// exampleDefaultEngine()
 	// exampleCustomConfig()
 	exampleGracefulShutdown()
 }
