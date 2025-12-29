@@ -257,6 +257,15 @@ Create `goexpress_test.go` to test the engine's lifecycle. We'll walk through th
 This test is like a quality control check for your engine's factory settings. When you create a new engine without specifying any configuration, you want to make sure it comes with sensible defaults ready to go.
 
 ```go
+package goexpress
+
+import (
+	"context"
+	"net/http"
+	"testing"
+	"time"
+)
+
 func TestNew(t *testing.T) {
 	engine := New()
 
@@ -483,6 +492,35 @@ go test -v -run TestGracefulShutdown
 ***Output***
 
 <img src="images/image3.png" alt="TestGracefulShutdown" />
+
+
+**Run all the tests at once:** 
+
+```
+go test -v ./
+```
+
+```
+ridwan@ubuntupad:~/projects/poridhi_workspace/goexpress$ go test -v .
+=== RUN   TestNew
+--- PASS: TestNew (0.00s)
+=== RUN   TestWithConfig
+2025/12/29 19:19:53 GoExpress server starting on http://localhost:8082
+2025/12/29 19:19:53 Shutting down server gracefully...
+2025/12/29 19:19:53 Server stopped successfully
+--- PASS: TestWithConfig (0.20s)
+=== RUN   TestGracefulShutdown
+2025/12/29 19:19:53 GoExpress server starting on http://localhost:8080
+    goexpress_test.go:104: long-running task started
+    goexpress_test.go:138: Initiating graceful shutdown
+2025/12/29 19:19:53 Shutting down server gracefully...
+    goexpress_test.go:109: Long-running task completed
+2025/12/29 19:19:55 Server stopped successfully
+    goexpress_test.go:154: Graceful shutdown test passed
+--- PASS: TestGracefulShutdown (2.31s)
+PASS
+ok      github.com/Ridwan414/goexpress  2.527s
+```
 
 ---
 
