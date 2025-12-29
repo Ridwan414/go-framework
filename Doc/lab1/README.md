@@ -4,7 +4,6 @@
 
 Understanding the internal workings of the Go framework is essential to building reliable web applications. The `net/http` package is at the core of web development in Go. In this lab, we will walk through the basic workflow of a Go HTTP server, then set up our own lightweight web framework ("GoExpress") from scratch, and test our server using our engine implementation.
 
----
 
 ## Part 1: Understanding Go's net/http Package
 
@@ -18,7 +17,6 @@ Go provides a powerful standard library for building web infrastructure. The `ne
 | `http.Request`        | Struct containing all request data (method, URL, headers, body)                         |
 | `ListenAndServe()`    | Starts the server and begins accepting connections                                      |
 
----
 
 ## Part 2: How the Go Web Server Handles Requests
 
@@ -34,7 +32,6 @@ Inside each goroutine:
 
 **Per-connection request handling**: Each goroutine runs its own loop that first parses the HTTP request with `readRequest()`, then executes your `ServeHTTP()` handler containing application logic, and finally sends the response with `finishRequest()`. If HTTP keep-alive is enabled, it loops back to handle another request on the same connection; otherwise, it closes the connection and the goroutine terminates.
 
----
 
 ## Part 3: Code Walkthrough
 
@@ -52,8 +49,6 @@ Check your Go version:
 ```bash
 go version
 ```
-
----
 
 ## Project Structure
 
@@ -97,7 +92,6 @@ Create the necessary files:
 touch goexpress.go config.go goexpress_test.go
 ```
 
----
 
 ## Step-by-Step Solution
 
@@ -297,14 +291,17 @@ func TestNew(t *testing.T) {
 - We verify both timeouts are set to 10 seconds (a reasonable default to prevent hanging requests)
 - Finally, we make sure the underlying HTTP server was created
 
----
-**Run the test**
+
+**Run the test:**
 ```
 go test -v -run TestNew
 ```
 
 ***Output***
+
 <img src="images/image1.png" alt="TestNew" />
+
+---
 
 ### Test 2: TestWithConfig - Custom Configuration & Real Server Test
 
@@ -388,6 +385,7 @@ go test -v -run TestWithConfig
 ```
 
 ***Output***
+
 <img src="images/image2.png" alt="TestWithConfig" />
 
 ---
@@ -476,14 +474,14 @@ Imagine you're running an e-commerce site and need to restart your server for up
 
 The 5-second timeout is important too—it means "wait up to 5 seconds for things to finish, but if something's really stuck, force quit anyway." This prevents one buggy request from making your server hang forever during shutdown.
 
----
 
-**Run the test**
+**Run the test:** 
 ```
 go test -v -run TestGracefulShutdown
 ```
 
 ***Output***
+
 <img src="images/image3.png" alt="TestGracefulShutdown" />
 
 ---
